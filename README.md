@@ -7,7 +7,8 @@
 [![Thumbnail](https://img.youtube.com/vi/JzsTfOFjC1o/maxresdefault.jpg)](https://youtu.be/JzsTfOFjC1o)
 
 ## Notes
-
+- npx create-next-
+app -e with-tailwindcss
 
 ## Additional Links
 
