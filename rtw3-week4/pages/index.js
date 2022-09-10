@@ -1,12 +1,14 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useState } from "react";
 
 const Home = () => {
+  const [wallet, setWalletAddress] = useState("")
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <div>
-        <input type={"text"}></input>
-        <input type={"text"}></input>
+        <input onChange={(e =>{setWalletAddress(e.target.value)})} type={"text"} placeholder="Add Your Wallet Address"></input>
+        <input type={"text"} placeholder="Add The Collection Address"></input>
         <label>
           <input type={"checkbox"}></input>
         </label>
