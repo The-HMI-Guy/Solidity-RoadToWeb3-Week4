@@ -1,14 +1,19 @@
-import xw from 'xwind'
-import ButtonReact from '../components/ButtonReact'
-import ButtonStyled from '../components/ButtonStyled'
+import Head from "next/head";
+import Image from "next/image";
 
-const Index = () => (
-  <div css={xw`grid justify-center items-center h-screen space-y-20`}>
-    <div css={xw`space-y-20`}>
-      <ButtonReact>@emotion/react</ButtonReact>
-      <ButtonStyled>@emotion/styled</ButtonStyled>
+const Home = () => {
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+      <div>
+        <input type={"text"}></input>
+        <input type={"text"}></input>
+        <label>
+          <input type={"checkbox"}></input>
+        </label>
+        <button>Let's go</button>
+      </div>
     </div>
-  </div>
-)
+  );
+};
 
-export default Index
+export default Home;
