@@ -4,11 +4,12 @@ import { useState } from "react";
 
 const Home = () => {
   const [wallet, setWalletAddress] = useState("")
+  const [collection, setCollectionAddress] = useState("")
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <div>
         <input onChange={(e =>{setWalletAddress(e.target.value)})} value={wallet}type={"text"} placeholder="Add Your Wallet Address"></input>
-        <input type={"text"} placeholder="Add The Collection Address"></input>
+        <input onChange={(e =>{setCollectionAddress(e.target.value)})} value={collection} type={"text"} placeholder="Add The Collection Address"></input>
         <label>
           <input type={"checkbox"}></input>
         </label>
