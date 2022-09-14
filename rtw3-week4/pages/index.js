@@ -5,10 +5,10 @@ import { useState } from "react";
 const Home = () => {
   const [wallet, setWalletAddress] = useState("");
   const [collection, setCollectionAddress] = useState("");
-
+  const [NFTs, setNFTs] = useState([]);
   const fetchNFTs = async () => {
     let nfts;
-    console.log("fetchying nfts");
+    console.log("fetching nfts");
     if (!collection.length) {
       // Setup request options:
       var requestOptions = {
@@ -18,8 +18,13 @@ const Home = () => {
       const apiKey = "6xkPfdAvIZ-1xZt3YSLG4OS6iEIAU9Ls";
       const baseURL = `https://eth-mainnet.alchemyapi.io/nft/v2/${apiKey}/getNFTs/`;
       const fetchURL = `${baseURL}?owner=${wallet}`;
-      nfts = fetchy();
+
+      nfts = await fetch(fetchURL, requestOptions).then((data) => data.json());
     } else {
+    }
+    if (nfts) {
+      console.log(nfts);
+      //setNFTs(nft)
     }
   };
   return (
@@ -44,11 +49,11 @@ const Home = () => {
         <label>
           <input type={"checkbox"}></input>
         </label>
-        <button>
-          onClick=
-          {() => {
+        <button
+          onClick={() => {
             fetchNFTs;
           }}
+        >
           Let's go
         </button>
       </div>
