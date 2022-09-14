@@ -13,15 +13,11 @@ const Home = () => {
       // Setup request options:
       var requestOptions = {
         method: "GET",
-        redirect: "follow",
       };
 
-      // Replace with your Alchemy API key:
-      const apiKey = "demo";
+      const apiKey = "6xkPfdAvIZ-1xZt3YSLG4OS6iEIAU9Ls";
       const baseURL = `https://eth-mainnet.alchemyapi.io/nft/v2/${apiKey}/getNFTs/`;
-      // Replace with the wallet address you want to query:
-      const ownerAddr = "0xF5FFF32CF83A1A614e15F25Ce55B0c0A6b5F8F2c";
-      const fetchURL = `${baseURL}?owner=${ownerAddr}`;
+      const fetchURL = `${baseURL}?owner=${wallet}`;
       nfts = fetchy();
     } else {
     }
