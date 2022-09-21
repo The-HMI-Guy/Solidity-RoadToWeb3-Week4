@@ -7,9 +7,9 @@
 [![Thumbnail](https://img.youtube.com/vi/JzsTfOFjC1o/maxresdefault.jpg)](https://youtu.be/JzsTfOFjC1o)
 
 ## Notes
-- npx create-next-
-app -e with-tailwindcss
+
+- npx create-next-app -e with-tailwindcss
+- cd rtw3-week4
+- rtw3-week4 % npm run dev
 
 ## Additional Links
-
-
