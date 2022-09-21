@@ -6,6 +6,7 @@ const Home = () => {
   const [wallet, setWalletAddress] = useState("");
   const [collection, setCollectionAddress] = useState("");
   const [NFTs, setNFTs] = useState([]);
+  const [fetchForCollection, setFetchForCollection] = useState(false);
 
   const fetchNFTs = async () => {
     let nfts;
@@ -65,7 +66,12 @@ const Home = () => {
           placeholder="Add The Collection Address"
         ></input>
         <label>
-          <input type={"checkbox"}></input>
+          <input
+            onChange={(e) => setFetchForCollection(e.target.checked)}
+            type={"checkbox"}
+          >
+            Fetch for collection
+          </input>
         </label>
         <button
           onClick={() => {
