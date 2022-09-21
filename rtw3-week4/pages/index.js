@@ -8,7 +8,7 @@ const Home = () => {
   const [NFTs, setNFTs] = useState([]);
   const fetchNFTs = async () => {
     let nfts;
-    console.log("fetching nfts");
+    console.log("fetch@ing nfts");
     if (!collection.length) {
       // Setup request options:
       var requestOptions = {
