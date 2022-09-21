@@ -29,7 +29,7 @@ const Home = () => {
     }
     if (nfts) {
       console.log("nfts:",nfts);
-      //setNFTs(nft)
+      setNFTs(nfts.ownedNfts)
     }
   };
   return (
