@@ -6,24 +6,29 @@ const Home = () => {
   const [wallet, setWalletAddress] = useState("");
   const [collection, setCollectionAddress] = useState("");
   const [NFTs, setNFTs] = useState([]);
-  const fetchNFTs = async () => {
+
+  const fetchNFTs = async() => {
     let nfts;
-    console.log("fetch@ing nfts");
+    console.log("fetching nfts");
+    const apiKey = "6xkPfdAvIZ-1xZt3YSLG4OS6iEIAU9Ls";
+    const baseURL = `https://eth-mainnet.alchemyapi.io/nft/v2/${apiKey}/getNFTs/`;
     if (!collection.length) {
       // Setup request options:
       var requestOptions = {
-        method: "GET",
+        method: "GET"
       };
 
-      const apiKey = "6xkPfdAvIZ-1xZt3YSLG4OS6iEIAU9Ls";
-      const baseURL = `https://eth-mainnet.alchemyapi.io/nft/v2/${apiKey}/getNFTs/`;
+
       const fetchURL = `${baseURL}?owner=${wallet}`;
 
       nfts = await fetch(fetchURL, requestOptions).then((data) => data.json());
     } else {
+      console.log("Fetching nfts for collection owned by address")
+      const fetchURL = `${baseURL}?owner=${wallet}&contractAddresses%5B%5D=${collection}`;
+      nfts = await fetch(fetchURL, requestOptions).then((data) => data.json());
     }
     if (nfts) {
-      console.log(nfts);
+      console.log("nfts:",nfts);
       //setNFTs(nft)
     }
   };
@@ -51,7 +56,7 @@ const Home = () => {
         </label>
         <button
           onClick={() => {
-            fetchNFTs;
+            fetchNFTs();
           }}
         >
           Let's go
