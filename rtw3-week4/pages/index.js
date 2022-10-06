@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import { NFTCard } from "./components/nftCard";
 import { useState } from "react";
 
 const Home = () => {
@@ -34,6 +35,9 @@ const Home = () => {
   };
   const fetchNFTsForCollection = async () => {
     if (collection.length) {
+      var requestOptions = {
+        method: "GET",
+      };
       const apiKey = "6xkPfdAvIZ-1xZt3YSLG4OS6iEIAU9Ls";
       const baseURL = `https://eth-mainnet.alchemyapi.io/nft/v2/${apiKey}/getNFTsForCollection/`;
       const fetchURL = `${baseURL}?contractAddress=${collection}&withMetadata=${"true"}`;
@@ -42,6 +46,7 @@ const Home = () => {
       );
       if (nfts) {
         console.log("NFTs in collection:", nfts);
+        setNFTs(nfts.nfts);
       }
     }
   };
@@ -69,17 +74,24 @@ const Home = () => {
           <input
             onChange={(e) => setFetchForCollection(e.target.checked)}
             type={"checkbox"}
-          >
-            Fetch for collection
-          </input>
+          ></input>
+          Fetch for collection
         </label>
         <button
           onClick={() => {
-            fetchNFTs();
+            if (fetchForCollection) {
+              fetchNFTsForCollection();
+            } else fetchNFTs();
           }}
         >
           Let's go
         </button>
+      </div>
+      <div>
+        {NFTs.length &&
+          NFTs.map((nft) => {
+            return <NFTCard nft={nft}></NFTCard>;
+          })}
       </div>
     </div>
   );
