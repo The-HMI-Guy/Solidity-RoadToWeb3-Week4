@@ -1,6 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
 import { NFTCard } from "components/nftCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 const Home = () => {
@@ -9,8 +11,12 @@ const Home = () => {
   const [NFTs, setNFTs] = useState([]);
   const [fetchForCollection, setFetchForCollection] = useState(false);
 
+  const [isLoading, setLoading] = useState(false);
+  const [startToken, setStartToken] = useState("");
+
   const fetchNFTs = async () => {
     let nfts;
+    setStartToken("");
     console.log("fetching nfts");
     const apiKey = "6xkPfdAvIZ-1xZt3YSLG4OS6iEIAU9Ls";
     const baseURL = `https://eth-mainnet.alchemyapi.io/nft/v2/${apiKey}/getNFTs/`;
@@ -19,11 +25,12 @@ const Home = () => {
       var requestOptions = {
         method: "GET",
       };
-
+      setLoading(true);
       const fetchURL = `${baseURL}?owner=${wallet}`;
 
       nfts = await fetch(fetchURL, requestOptions).then((data) => data.json());
     } else {
+      setLoading(true);
       console.log("Fetching nfts for collection owned by address");
       const fetchURL = `${baseURL}?owner=${wallet}&contractAddresses%5B%5D=${collection}`;
       nfts = await fetch(fetchURL, requestOptions).then((data) => data.json());
@@ -32,22 +39,38 @@ const Home = () => {
       console.log("nfts:", nfts);
       setNFTs(nfts.ownedNfts);
     }
+    setLoading(false);
   };
   const fetchNFTsForCollection = async () => {
     if (collection.length) {
+      setLoading(true);
       var requestOptions = {
         method: "GET",
       };
       const apiKey = "6xkPfdAvIZ-1xZt3YSLG4OS6iEIAU9Ls";
       const baseURL = `https://eth-mainnet.alchemyapi.io/nft/v2/${apiKey}/getNFTsForCollection/`;
-      const fetchURL = `${baseURL}?contractAddress=${collection}&withMetadata=${"true"}`;
+      let fetchURL = null;
+      if (startToken.length) {
+        fetchURL = `${baseURL}?contractAddress=${collection}&startToken=${startToken}&withMetadata=${"true"}`;
+      } else {
+        fetchURL = `${baseURL}?contractAddress=${collection}&withMetadata=${"true"}`;
+      }
+
+      //const fetchURL = `${baseURL}?contractAddress=${collection}&withMetadata=${"true"}`;
+
       const nfts = await fetch(fetchURL, requestOptions).then((data) =>
         data.json()
       );
       if (nfts) {
         console.log("NFTs in collection:", nfts);
         setNFTs(nfts.nfts);
+        if (nfts?.nextToken?.length) {
+          setStartToken(nfts.nextToken);
+        } else {
+          setStartToken("");
+        }
       }
+      setLoading(false);
     }
   };
 
@@ -82,6 +105,7 @@ const Home = () => {
           Fetch for collection
         </label>
         <button
+          disabled={isLoading}
           className="disbaled:bg-slate-500 text-white bg-blue-400 px-4 py-2 mt-3 rounded-sm w-1/5"
           onClick={() => {
             if (fetchForCollection) {
@@ -93,11 +117,29 @@ const Home = () => {
         </button>
       </div>
       <div className="flex flex-wrap gap-y-12 mt-4 w-5/6 gap-x-2 justify-center">
-        {NFTs.length &&
-          NFTs.map((nft) => {
-            return <NFTCard nft={nft}></NFTCard>;
-          })}
+        {isLoading ? (
+          <FontAwesomeIcon icon={faSpinner} spin size="2x" />
+        ) : (
+          NFTs.length &&
+          NFTs.map((nft, i) => {
+            return <NFTCard nft={nft} key={i}></NFTCard>;
+          })
+        )}
       </div>
+
+      {/* Pagination */}
+      {!isLoading && startToken.length ? (
+        <>
+          <div
+            className="text-white bg-green-600 px-2 py-2 mt-3 rounded-sm"
+            onClick={() => fetchNFTsForCollection()}
+          >
+            View next 100 NFTs
+          </div>
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
