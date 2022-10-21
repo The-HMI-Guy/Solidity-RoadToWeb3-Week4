@@ -52,9 +52,10 @@ const Home = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
-      <div>
+    <div className="flex flex-col items-center justify-center py-8 gap-y-3">
+      <div className="flex flex-col w-full justify-center items-center gap-y-2">
         <input
+          className="w-2/5 bg-slate-100 py-2 px-2 rounded-lg text-gray-800 focus:outline-blue-300 disabled:bg-slate-50 disabled:text-gray-50"
           onChange={(e) => {
             setWalletAddress(e.target.value);
           }}
